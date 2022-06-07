@@ -7,10 +7,12 @@ import java.util.Scanner;
 import model.filters.BrightnessFilter;
 import model.filters.Filter;
 import model.ImageModel;
+import model.filters.HorizontalFlipFilter;
 import model.filters.IntensityFilter;
 import model.filters.LumaFilter;
 import model.filters.RGBFilter;
 import model.filters.ValueFilter;
+import model.filters.VerticalFlipFilter;
 import model.util.ImageUtil;
 import model.Pixel;
 import model.ImageModelRGB;
@@ -116,9 +118,19 @@ public class ImageControllerImpl implements ImageController {
             break;
 
           case "horizontal-flip":
+            if (images.containsKey(inputArray[1])) {
+              Filter horizontalFlipFilter = new HorizontalFlipFilter();
+              ImageModel filteredImage = horizontalFlipFilter.apply(images.get(inputArray[1]));
+              images.put(inputArray[2], filteredImage);
+            }
             break;
 
           case "vertical-flip":
+            if (images.containsKey(inputArray[1])) {
+              Filter verticalFlipFilter = new VerticalFlipFilter();
+              ImageModel filteredImage = verticalFlipFilter.apply(images.get(inputArray[1]));
+              images.put(inputArray[2], filteredImage);
+            }
             break;
 
           case "brighten":
