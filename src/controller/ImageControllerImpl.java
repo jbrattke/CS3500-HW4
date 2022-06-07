@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -37,7 +38,7 @@ public class ImageControllerImpl implements ImageController {
 
   /**
    * This method runs the program. ??
-   * @throws IllegalStateException if appendable cannot be printed too
+   * @throws IllegalStateException if appendable cannot be printed to
    */
   @Override
   public void run() {
