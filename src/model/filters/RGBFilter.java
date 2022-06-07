@@ -1,7 +1,5 @@
 package model.filters;
 
-import model.ImageModel;
-import model.ImageModelRGB;
 import model.Pixel;
 import model.PixelRGB;
 
@@ -9,14 +7,14 @@ import model.PixelRGB;
  * This class represents a filter that greyscales an image by
  * setting all channels to the red channel value.
  */
-public class GreyscaleRGB extends GreyscaleFilter {
+public class RGBFilter extends FilterModel {
   private final int channel;
 
   /**
    * Constructs a new RGB greyscale filter.
    * @param channel the pixel RGB channel to use for greyscaling
    */
-  public GreyscaleRGB(int channel) {
+  public RGBFilter(int channel) {
     this.channel = channel;
   }
 

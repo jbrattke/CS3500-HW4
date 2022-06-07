@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import model.filters.BrightnessFilter;
 import model.filters.Filter;
 import model.ImageModel;
-import model.filters.GreyscaleIntensity;
-import model.filters.GreyscaleLuma;
-import model.filters.GreyscaleRGB;
-import model.filters.GreyscaleValue;
+import model.filters.IntensityFilter;
+import model.filters.LumaFilter;
+import model.filters.RGBFilter;
+import model.filters.ValueFilter;
 import model.util.ImageUtil;
 import model.Pixel;
 import model.ImageModelRGB;
@@ -46,8 +47,16 @@ public class ImageControllerImpl implements ImageController {
 
         switch (inputArray[0]) {
           case "load":
-            Pixel[][] pixel = ImageUtil.readPPM(inputArray[1]);
-            images.put(inputArray[2], new ImageModelRGB(pixel));
+            try {
+              Pixel[][] pixel = ImageUtil.readPPM(inputArray[1]);
+              if (images.containsKey(inputArray[1])) {
+                images.replace(inputArray[1], new ImageModelRGB(pixel));
+              } else {
+                images.put(inputArray[2], new ImageModelRGB(pixel));
+              }
+            } catch (Exception e) {
+              System.out.println("Error: " + e.getMessage());
+            }
             break;
 
           case "save":
@@ -60,52 +69,66 @@ public class ImageControllerImpl implements ImageController {
 
           case "red-component":
             if (images.containsKey(inputArray[1])) {
-              Filter redFilter = new GreyscaleRGB(0);
+              Filter redFilter = new RGBFilter(0);
               ImageModel filteredImage = redFilter.apply(images.get(inputArray[1]));
               images.put(inputArray[2], filteredImage);
             }
             break;
+
           case "green-component":
             if (images.containsKey(inputArray[1])) {
-              Filter greenFilter = new GreyscaleRGB(1);
+              Filter greenFilter = new RGBFilter(1);
               ImageModel filteredImage = greenFilter.apply(images.get(inputArray[1]));
               images.put(inputArray[2], filteredImage);
             }
             break;
+
           case "blue-component":
             if (images.containsKey(inputArray[1])) {
-              Filter blueFilter = new GreyscaleRGB(2);
+              Filter blueFilter = new RGBFilter(2);
               ImageModel filteredImage = blueFilter.apply(images.get(inputArray[1]));
               images.put(inputArray[2], filteredImage);
             }
             break;
+
           case "value-component":
             if (images.containsKey(inputArray[1])) {
-              Filter valueFilter = new GreyscaleValue();
+              Filter valueFilter = new ValueFilter();
               ImageModel filteredImage = valueFilter.apply(images.get(inputArray[1]));
               images.put(inputArray[2], filteredImage);
             }
             break;
+
           case "luma-component":
             if (images.containsKey(inputArray[1])) {
-              Filter lumaFilter = new GreyscaleLuma();
+              Filter lumaFilter = new LumaFilter();
               ImageModel filteredImage = lumaFilter.apply(images.get(inputArray[1]));
               images.put(inputArray[2], filteredImage);
             }
             break;
+
           case "intensity-component":
             if (images.containsKey(inputArray[1])) {
-              Filter intensityFilter = new GreyscaleIntensity();
+              Filter intensityFilter = new IntensityFilter();
               ImageModel filteredImage = intensityFilter.apply(images.get(inputArray[1]));
               images.put(inputArray[2], filteredImage);
             }
             break;
+
           case "horizontal-flip":
             break;
+
           case "vertical-flip":
             break;
+
           case "brighten":
+            if (images.containsKey(inputArray[2])) {
+              Filter brightnessFilter = new BrightnessFilter(Integer.parseInt(inputArray[1]));
+              ImageModel filteredImage = brightnessFilter.apply(images.get(inputArray[2]));
+              images.put(inputArray[3], filteredImage);
+            }
             break;
+
           case "exit":
             exit = true;
             break;

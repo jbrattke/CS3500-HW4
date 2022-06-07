@@ -3,7 +3,7 @@ package model.filters;
 import model.Pixel;
 import model.PixelRGB;
 
-public class GreyscaleLuma extends GreyscaleFilter{
+public class ValueFilter extends FilterModel {
   /**
    * Applies the filter to the given pixel.
    *
@@ -12,9 +12,7 @@ public class GreyscaleLuma extends GreyscaleFilter{
    */
   @Override
   protected Pixel applyFilter(Pixel pixel) {
-    double lumaValue = pixel.getRed() * 0.2126
-            + pixel.getGreen() * 0.7152
-            + pixel.getBlue() * 0.0722;
-    return new PixelRGB((int) lumaValue, (int) lumaValue, (int) lumaValue);
+    int maxVal = Math.max(Math.max(pixel.getRed(), pixel.getGreen()), pixel.getBlue());
+    return new PixelRGB(maxVal, maxVal, maxVal);
   }
 }

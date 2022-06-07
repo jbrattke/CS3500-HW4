@@ -3,9 +3,8 @@ package model.filters;
 import model.ImageModel;
 import model.ImageModelRGB;
 import model.Pixel;
-import model.PixelRGB;
 
-public abstract class GreyscaleFilter implements Filter {
+public abstract class FilterModel implements Filter {
   /**
    * Applies the filter to the given image.
    *
@@ -15,9 +14,9 @@ public abstract class GreyscaleFilter implements Filter {
   @Override
   public ImageModel apply(ImageModel image) {
     Pixel[][] srcPixels = image.getPixels();
-    Pixel[][] newPixels = new Pixel[image.getHeight()][image.getWidth()];
-    for (int i = 0; i < image.getHeight(); i++) {
-      for (int j = 0; j < image.getWidth(); j++) {
+    Pixel[][] newPixels = new Pixel[image.getWidth()][image.getHeight()];
+    for (int i = 0; i < image.getWidth(); i++) {
+      for (int j = 0; j < image.getHeight(); j++) {
         newPixels[i][j] = applyFilter(srcPixels[i][j]);
       }
     }
