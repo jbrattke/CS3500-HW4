@@ -8,6 +8,9 @@ import javax.imageio.ImageIO;
 import model.ImageModel;
 import model.Pixel;
 
+/**
+ * This class is used to convert an ImageModel to a file.
+ */
 public class ConvertImage {
 
   /**
@@ -27,7 +30,7 @@ public class ConvertImage {
           int rgb = pixel.getRed();
           rgb = (rgb << 8) + pixel.getGreen();
           rgb = (rgb << 8) + pixel.getBlue();
-          newImage.setRGB(y, x, rgb);
+          newImage.setRGB(x, y, rgb);
         }
       }
 
