@@ -15,8 +15,8 @@ public class ImageModelRGB implements ImageModel {
    */
   public ImageModelRGB(Pixel[][] pixels) {
     this.pixels = pixels;
-    this.width = pixels[0].length;
-    this.height = pixels.length;
+    this.width = pixels.length;
+    this.height = pixels[0].length;
   }
 
   /**
@@ -42,13 +42,13 @@ public class ImageModelRGB implements ImageModel {
   /**
    * Returns the pixel at the specified coordinates.
    *
-   * @param x the x coordinate
-   * @param y the y coordinate
+   * @param x
+   * @param y
    * @return the pixel at the specified coordinates
    */
   @Override
   public Pixel getPixel(int x, int y) {
-    return pixels[y][x];
+    return pixels[x][y];
   }
 
   /**
