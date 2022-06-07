@@ -15,6 +15,27 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestControllerImpl {
 
+  // tests error if the appendable is invalid.
+  @Test (expected = IllegalStateException.class)
+  public void testBadAppendable() {
+
+    String inputString = "exit";
+
+    StringReader in = new StringReader(inputString);
+
+    OutputStream out = new ByteArrayOutputStream();
+
+    Appendable log = new CorruptAppendable();
+
+    ImageView view = new ImageViewImpl(log);
+
+    ImageControllerImpl controller = new ImageControllerImpl(in,view);
+
+    controller.run();
+
+    assertEquals("Welcome to the image program!\n", log.toString());
+  }
+
   @Test
   public void testQuitRightAway() {
 
