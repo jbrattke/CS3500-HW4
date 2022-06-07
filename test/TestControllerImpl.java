@@ -31,6 +31,7 @@ public class TestControllerImpl {
     ImageControllerImpl controller = new ImageControllerImpl(in,view);
 
     controller.run();
+
     assertEquals("Welcome to the image program!\n", log.toString());
   }
 
