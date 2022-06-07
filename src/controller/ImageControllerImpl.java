@@ -16,31 +16,35 @@ import model.filters.VerticalFlipFilter;
 import model.util.ImageUtil;
 import model.Pixel;
 import model.ImageModelRGB;
+import view.ImageView;
 
 import static model.util.ConvertImage.convertImageToFile;
 
 public class ImageControllerImpl implements ImageController {
   private final Readable in;
+  private final ImageView view;
   private Map<String, ImageModel> images;
 
   /**
    * Constructor for ImageControllerImpl.
    * @param r the Readable object
    */
-  public ImageControllerImpl(Readable r) {
+  public ImageControllerImpl(Readable r, ImageView view) {
     images = new HashMap<String, ImageModel>();
     in = r;
+    this.view = view;
   }
 
   /**
    * This method runs the program. ??
+   * @throws IllegalStateException if appendable cannot be printed too
    */
   @Override
   public void run() {
     Scanner inScan = new Scanner(in);
     boolean exit = false;
 
-    System.out.println("Welcome to the Image program");
+    renderViewMessage("Welcome to the image program!\n");
 
     while (!exit) {
       if (inScan.hasNextLine()) {
@@ -57,7 +61,7 @@ public class ImageControllerImpl implements ImageController {
                 images.put(inputArray[2], new ImageModelRGB(pixel));
               }
             } catch (Exception e) {
-              System.out.println("Error: " + e.getMessage());
+              renderViewMessage("Error: " + e.getMessage());
             }
             break;
 
@@ -65,7 +69,7 @@ public class ImageControllerImpl implements ImageController {
             if (images.containsKey(inputArray[2])) {
               convertImageToFile(images.get(inputArray[2]), inputArray[1]);
             } else {
-              System.out.println("Image with name does not exist!");
+              renderViewMessage("Image with name does not exist!");
             }
             break;
 
@@ -144,10 +148,19 @@ public class ImageControllerImpl implements ImageController {
           case "exit":
             exit = true;
             break;
+
           default:
-            System.out.println("Invalid input");
+            renderViewMessage("Invalid input");
         }
       }
+    }
+  }
+
+  private void renderViewMessage(String text) {
+    try {
+      view.renderMessage(text);
+    } catch (Exception e) {
+      throw new IllegalStateException("Cannot print to view appendable!");
     }
   }
 }
