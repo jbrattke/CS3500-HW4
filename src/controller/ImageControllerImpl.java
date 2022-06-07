@@ -4,9 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-import model.Filter;
+import model.filters.Filter;
 import model.ImageModel;
-import model.RedFilter;
+import model.filters.GreyscaleIntensity;
+import model.filters.GreyscaleLuma;
+import model.filters.GreyscaleRGB;
+import model.filters.GreyscaleValue;
 import model.util.ImageUtil;
 import model.Pixel;
 import model.ImageModelRGB;
@@ -57,20 +60,45 @@ public class ImageControllerImpl implements ImageController {
 
           case "red-component":
             if (images.containsKey(inputArray[1])) {
-              Filter redFilter = new RedFilter();
+              Filter redFilter = new GreyscaleRGB(0);
               ImageModel filteredImage = redFilter.apply(images.get(inputArray[1]));
               images.put(inputArray[2], filteredImage);
             }
             break;
           case "green-component":
+            if (images.containsKey(inputArray[1])) {
+              Filter greenFilter = new GreyscaleRGB(1);
+              ImageModel filteredImage = greenFilter.apply(images.get(inputArray[1]));
+              images.put(inputArray[2], filteredImage);
+            }
             break;
           case "blue-component":
+            if (images.containsKey(inputArray[1])) {
+              Filter blueFilter = new GreyscaleRGB(2);
+              ImageModel filteredImage = blueFilter.apply(images.get(inputArray[1]));
+              images.put(inputArray[2], filteredImage);
+            }
             break;
           case "value-component":
+            if (images.containsKey(inputArray[1])) {
+              Filter valueFilter = new GreyscaleValue();
+              ImageModel filteredImage = valueFilter.apply(images.get(inputArray[1]));
+              images.put(inputArray[2], filteredImage);
+            }
             break;
           case "luma-component":
+            if (images.containsKey(inputArray[1])) {
+              Filter lumaFilter = new GreyscaleLuma();
+              ImageModel filteredImage = lumaFilter.apply(images.get(inputArray[1]));
+              images.put(inputArray[2], filteredImage);
+            }
             break;
           case "intensity-component":
+            if (images.containsKey(inputArray[1])) {
+              Filter intensityFilter = new GreyscaleIntensity();
+              ImageModel filteredImage = intensityFilter.apply(images.get(inputArray[1]));
+              images.put(inputArray[2], filteredImage);
+            }
             break;
           case "horizontal-flip":
             break;

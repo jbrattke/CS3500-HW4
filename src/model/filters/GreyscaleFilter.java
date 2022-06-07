@@ -1,10 +1,11 @@
-package model;
+package model.filters;
 
-/**
- * This class represents a filter that greyscales an image by
- * setting all channels to the red channel value.
- */
-public class RedFilter implements Filter{
+import model.ImageModel;
+import model.ImageModelRGB;
+import model.Pixel;
+import model.PixelRGB;
+
+public abstract class GreyscaleFilter implements Filter {
   /**
    * Applies the filter to the given image.
    *
@@ -17,10 +18,17 @@ public class RedFilter implements Filter{
     Pixel[][] newPixels = new Pixel[image.getHeight()][image.getWidth()];
     for (int i = 0; i < image.getHeight(); i++) {
       for (int j = 0; j < image.getWidth(); j++) {
-        int red = srcPixels[i][j].getRed();
-        newPixels[i][j] = new PixelRGB(red, red, red);
+        newPixels[i][j] = applyFilter(srcPixels[i][j]);
       }
     }
     return new ImageModelRGB(newPixels);
   }
+
+  /**
+   * Applies the filter to the given pixel.
+   *
+   * @param pixel The pixel to apply the filter to.
+   * @return The filtered pixel.
+   */
+  protected abstract Pixel applyFilter(Pixel pixel);
 }

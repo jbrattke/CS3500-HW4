@@ -1,4 +1,6 @@
-package model;
+package model.filters;
+
+import model.ImageModel;
 
 /**
  * This class represents a filter.
