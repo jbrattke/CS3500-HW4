@@ -16,7 +16,7 @@ public class ImageModelRGBTest {
     Pixel[][] board = new Pixel[100][100];
     for (int i = 0; i < 100; i++) {
       for (int j = 0; j < 100; j++) {
-        Pixel pixel = new PixelRGB(i, j, i);
+        Pixel pixel = new PixelRGB(i, j, i, 255);
         board[i][j] = pixel;
       }
     }
@@ -36,7 +36,7 @@ public class ImageModelRGBTest {
     Pixel[][] board = new Pixel[3][3];
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
-        Pixel pixel = new PixelRGB(i, j, i);
+        Pixel pixel = new PixelRGB(i, j, i, 255);
         board[i][j] = pixel;
       }
     }

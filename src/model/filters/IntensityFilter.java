@@ -13,6 +13,6 @@ public class IntensityFilter extends FilterModel {
   @Override
   protected Pixel applyFilter(Pixel pixel) {
     int channelAvg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
-    return new PixelRGB(channelAvg, channelAvg, channelAvg);
+    return new PixelRGB(channelAvg, channelAvg, channelAvg, pixel.getMaxColorVal());
   }
 }

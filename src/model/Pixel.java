@@ -32,4 +32,11 @@ public interface Pixel {
    * @return the color channels of pixel as an array
    */
   public int[] getAllChannels();
+
+  /**
+   * Gets max color value for pixel.
+   *
+   * @return the color channels of pixel as an array
+   */
+  public int getMaxColorVal();
 }

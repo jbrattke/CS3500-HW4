@@ -27,7 +27,7 @@ public class RGBFilter extends FilterModel {
   @Override
   protected Pixel applyFilter(Pixel pixel) {
     int channelValue = getPixelChannel(pixel);
-    return new PixelRGB(channelValue, channelValue, channelValue);
+    return new PixelRGB(channelValue, channelValue, channelValue, pixel.getMaxColorVal());
   }
 
   private int getPixelChannel(Pixel pixel) {

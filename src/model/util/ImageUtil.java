@@ -64,7 +64,7 @@ public class ImageUtil {
             int r = sc.nextInt();
             int g = sc.nextInt();
             int b = sc.nextInt();
-            pixels[j][i] = new PixelRGB(r,g,b);
+            pixels[j][i] = new PixelRGB(r,g,b, maxValue);
         }
     }
 

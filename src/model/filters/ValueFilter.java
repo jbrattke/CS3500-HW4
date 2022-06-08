@@ -13,6 +13,6 @@ public class ValueFilter extends FilterModel {
   @Override
   protected Pixel applyFilter(Pixel pixel) {
     int maxVal = Math.max(Math.max(pixel.getRed(), pixel.getGreen()), pixel.getBlue());
-    return new PixelRGB(maxVal, maxVal, maxVal);
+    return new PixelRGB(maxVal, maxVal, maxVal, pixel.getMaxColorVal());
   }
 }

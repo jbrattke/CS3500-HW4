@@ -15,6 +15,6 @@ public class LumaFilter extends FilterModel {
     double lumaValue = pixel.getRed() * 0.2126
             + pixel.getGreen() * 0.7152
             + pixel.getBlue() * 0.0722;
-    return new PixelRGB((int) lumaValue, (int) lumaValue, (int) lumaValue);
+    return new PixelRGB((int) lumaValue, (int) lumaValue, (int) lumaValue, pixel.getMaxColorVal());
   }
 }
