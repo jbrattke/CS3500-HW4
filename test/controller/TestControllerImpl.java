@@ -1,6 +1,9 @@
+package controller;
+
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
 
@@ -23,7 +26,7 @@ public class TestControllerImpl {
 
     StringReader in = new StringReader(inputString);
 
-    OutputStream out = new ByteArrayOutputStream();
+    // OutputStream out = new ByteArrayOutputStream();
 
     Appendable log = new CorruptAppendable();
 
@@ -56,4 +59,24 @@ public class TestControllerImpl {
     assertEquals("Welcome to the image program!\n", log.toString());
   }
 
+  /**
+   * A bad Appendable, used for testing.
+   */
+  private static class CorruptAppendable implements Appendable {
+
+    @Override
+    public Appendable append(CharSequence csq) throws IOException {
+      throw new IOException();
+    }
+
+    @Override
+    public Appendable append(CharSequence csq, int start, int end) throws IOException {
+      throw new IOException();
+    }
+
+    @Override
+    public Appendable append(char c) throws IOException {
+      throw new IOException();
+    }
+  }
 }
