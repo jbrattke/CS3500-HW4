@@ -21,7 +21,7 @@ public class ImageViewImplTest {
     try {
       view.renderMessage("Hello World!");
     } catch (Exception e) {
-      assert(false);
+      assertEquals(false, view);
     }
     assertEquals("Hello World!", dest.toString());
   }

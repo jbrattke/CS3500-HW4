@@ -3,6 +3,10 @@ package model.filters;
 import model.Pixel;
 import model.PixelRGB;
 
+/**
+ * Represents the intensity filter. Used to change the values of an image's pixels to the
+ * average of them.
+ */
 public class IntensityFilter extends FilterModel {
   /**
    * Applies the filter to the given pixel.
@@ -11,7 +15,7 @@ public class IntensityFilter extends FilterModel {
    * @return The filtered pixel.
    */
   @Override
-  protected Pixel applyFilter(Pixel pixel) {
+  protected Pixel applyFilterToPixel(Pixel pixel) {
     int channelAvg = (pixel.getRed() + pixel.getGreen() + pixel.getBlue()) / 3;
     return new PixelRGB(channelAvg, channelAvg, channelAvg, pixel.getMaxColorVal());
   }

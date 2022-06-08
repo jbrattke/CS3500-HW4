@@ -14,7 +14,8 @@ import view.ImageViewImpl;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Tests the controller implementation
+ * Tests the controller implementation, uses a corrupted appendable and mock views and models
+ * as well.
  */
 public class TestControllerImpl {
 

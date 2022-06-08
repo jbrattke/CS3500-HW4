@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -21,6 +20,10 @@ import view.ImageView;
 
 import static model.util.ConvertImage.convertImageToFile;
 
+/**
+ * Controller implementation to take input from the user and manage the model and view
+ * accordingly.
+ */
 public class ImageControllerImpl implements ImageController {
   private final Readable in;
   private final ImageView view;

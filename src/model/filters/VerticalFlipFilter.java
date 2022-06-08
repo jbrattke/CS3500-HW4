@@ -3,6 +3,10 @@ package model.filters;
 import model.ImageModel;
 import model.Pixel;
 
+/**
+ * Used to flip an image vertically. Needs the opposite pixel from the same column
+ * in order to flip.
+ */
 public class VerticalFlipFilter extends FlipFilterModel {
   /**
    * Applies the filter to the given pixel.
