@@ -3,9 +3,14 @@ package model.filters;
 import model.ImageModel;
 import model.Pixel;
 
+/**
+ * Used to flip an image horizontally. Needs the opposite pixel from the same row in order to flip.
+ */
 public class HorizontalFlipFilter extends FlipFilterModel {
+
   /**
-   * Applies the filter to the given pixel.
+   * Finds the pixel on the opposite side of the row of the given pixel and returns it.
+   * Used in the apply method.
    *
    * @param image the given image that the filter is being applied too
    * @param x     the x coord of pixel

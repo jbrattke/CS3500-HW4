@@ -3,6 +3,9 @@ package model.filters;
 import model.ImageModelRGB;
 import model.util.ImageUtil;
 
+/**
+ * Tests the brightness filter class.
+ */
 public class BrightnessFilterTest extends FilterModelTest {
   @Override
   public void setUp() {

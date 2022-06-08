@@ -4,6 +4,10 @@ import model.ImageModel;
 import model.ImageModelRGB;
 import model.Pixel;
 
+/**
+ * Abstract class for filters that flip an image to unify them, seperating them from
+ * pixel value manipulating filters and give them their similar apply method.
+ */
 public abstract class FlipFilterModel implements Filter {
   /**
    * Applies the filter to the given image.

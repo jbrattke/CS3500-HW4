@@ -1,10 +1,7 @@
 package model.filters;
 
-import org.junit.Before;
 
 import model.ImageModelRGB;
-import model.Pixel;
-import model.PixelRGB;
 import model.util.ImageUtil;
 
 /**

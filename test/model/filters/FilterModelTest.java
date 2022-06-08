@@ -4,10 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import model.ImageModel;
-import model.Pixel;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 
 /**
  * This abstract class is used for testing all filters that extend FilterModel.

@@ -4,6 +4,10 @@ import model.ImageModel;
 import model.ImageModelRGB;
 import model.Pixel;
 
+/**
+ * Abstract class that is used for pixel value manipulation filters to unify them
+ * and give them the similar apply method.
+ */
 public abstract class FilterModel implements Filter {
   /**
    * Applies the filter to the given image.
@@ -17,7 +21,7 @@ public abstract class FilterModel implements Filter {
     Pixel[][] newPixels = new Pixel[image.getWidth()][image.getHeight()];
     for (int i = 0; i < image.getWidth(); i++) {
       for (int j = 0; j < image.getHeight(); j++) {
-        newPixels[i][j] = applyFilter(srcPixels[i][j]);
+        newPixels[i][j] = applyFilterToPixel(srcPixels[i][j]);
       }
     }
     return new ImageModelRGB(newPixels);
@@ -29,5 +33,5 @@ public abstract class FilterModel implements Filter {
    * @param pixel The pixel to apply the filter to.
    * @return The filtered pixel.
    */
-  protected abstract Pixel applyFilter(Pixel pixel);
+  protected abstract Pixel applyFilterToPixel(Pixel pixel);
 }
