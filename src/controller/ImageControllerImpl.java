@@ -19,6 +19,7 @@ import model.ImageModelRGB;
 import view.ImageView;
 
 import static model.util.ConvertImage.convertImageToFile;
+import static model.util.ConvertImage.convertImageToPPM;
 
 /**
  * Controller implementation to take input from the user and manage the model and view
@@ -84,7 +85,13 @@ public class ImageControllerImpl implements ImageController {
 
       case "save":
         if (images.containsKey(inputArray[2])) {
-          convertImageToFile(images.get(inputArray[2]), inputArray[1]);
+          if (inputArray[1].split("\\.").length > 1
+                  && inputArray[1].split("\\.")[1] == "ppm") {
+            System.out.println("HEllo");
+            convertImageToPPM(images.get(inputArray[2]), inputArray[1]);
+          } else {
+            convertImageToFile(images.get(inputArray[2]), inputArray[1]);
+          }
         } else {
           renderViewMessage("Image with name does not exist!");
         }
@@ -180,6 +187,19 @@ public class ImageControllerImpl implements ImageController {
         }
         break;
 
+      case "darken":
+        if (images.containsKey(inputArray[2])) {
+          Filter brightnessFilter = new BrightnessFilter(Integer.parseInt(inputArray[1]) * -1);
+          ImageModel filteredImage = brightnessFilter.apply(images.get(inputArray[2]));
+          images.put(inputArray[3], filteredImage);
+        } else {
+          renderViewMessage("Image with name does not exist!");
+        }
+        break;
+
+      case "help":
+        printHelpMessage();
+
       case "exit":
       case "q":
         exit = true;
@@ -188,6 +208,10 @@ public class ImageControllerImpl implements ImageController {
       default:
         renderViewMessage("Invalid input");
     }
+  }
+
+  private void printHelpMessage() {
+    renderViewMessage("Help!\n");
   }
 
   private void renderViewMessage(String text) throws IllegalStateException {
