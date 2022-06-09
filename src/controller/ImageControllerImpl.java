@@ -210,6 +210,7 @@ public class ImageControllerImpl implements ImageController {
 
       case "help":
         printHelpMessage();
+        break;
 
       case "q":
         exit = true;
