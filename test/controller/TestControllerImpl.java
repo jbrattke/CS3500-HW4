@@ -66,7 +66,7 @@ public class TestControllerImpl {
   @Test
   public void testToView() {
 
-    String inputString = "exit";
+    String inputString = "help";
 
     StringReader in = new StringReader(inputString);
 
@@ -81,6 +81,8 @@ public class TestControllerImpl {
     controller.run();
 
     assertEquals("Message sent to the view is: Welcome to the image program!\n" +
+            "\n" +
+            "Message sent to the view is: Help!\n" +
             "\n", log.toString());
   }
 
