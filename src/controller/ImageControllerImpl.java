@@ -87,7 +87,6 @@ public class ImageControllerImpl implements ImageController {
         if (images.containsKey(inputArray[2])) {
           if (inputArray[1].split("\\.").length > 1
                   && inputArray[1].split("\\.")[1] == "ppm") {
-            System.out.println("HEllo");
             convertImageToPPM(images.get(inputArray[2]), inputArray[1]);
           } else {
             convertImageToFile(images.get(inputArray[2]), inputArray[1]);
