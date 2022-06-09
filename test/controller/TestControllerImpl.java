@@ -11,6 +11,7 @@ import java.io.StringReader;
 import controller.ImageControllerImpl;
 import view.ImageView;
 import view.ImageViewImpl;
+import view.MockView;
 
 import static model.util.ImageUtil.comparePPM;
 import static org.junit.Assert.assertEquals;
@@ -45,6 +46,7 @@ public class TestControllerImpl {
     assertEquals("Welcome to the image program!\n", log.toString());
   }
 
+  // tests quiting as first action.
   @Test
   public void loadAndSaveTest() {
     StringBuilder log = new StringBuilder();
@@ -61,6 +63,30 @@ public class TestControllerImpl {
     //deleting test files
     File file = new File("test.ppm");
     file.delete();
+  }
+
+  // tests the messages sent to the view with a mock
+  @Test
+  public void testToView() {
+
+    String inputString = "help";
+
+    StringReader in = new StringReader(inputString);
+
+    OutputStream out = new ByteArrayOutputStream();
+
+    StringBuilder log = new StringBuilder();
+
+    ImageView view = new MockView(log);
+
+    ImageControllerImpl controller = new ImageControllerImpl(in,view);
+
+    controller.run();
+
+    assertEquals("Message sent to the view is: Welcome to the image program!\n" +
+            "\n" +
+            "Message sent to the view is: Help!\n" +
+            "\n", log.toString());
   }
 
   /**
