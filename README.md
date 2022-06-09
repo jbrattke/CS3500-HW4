@@ -5,7 +5,7 @@ To run the program, go to the RunProgram class, make sure to have an ImageView a
 
 ### Commands:
 
-load image-path image-name  \\
+load image-path image-name  \n
 *Loads an image from computer from the given image-path and stores it under given image-name*
 
 save image-path image-name
