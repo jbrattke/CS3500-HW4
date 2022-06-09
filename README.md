@@ -1,8 +1,9 @@
-#### Image Program
+## Image Program
 
+### Running Program:
 To run the program, go to the RunProgram class, make sure to have an ImageView and ImageController created in the main method, then call the ImageController's run method.
 
-## Commands:
+### Commands:
 
 load image-path image-name 
 *Loads an image from computer from the given image-path and stores it under given image-name*
