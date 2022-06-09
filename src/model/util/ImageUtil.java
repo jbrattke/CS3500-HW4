@@ -69,8 +69,8 @@ public class ImageUtil {
 
   /**
    * Converts given ppm to ImageModel, and compares models.
-   * @param filename1
-   * @param filename2
+   * @param filename1 first file
+   * @param filename2 second file
    * @return true if models are equal, false otherwise
    */
   public static boolean comparePPM(String filename1, String filename2) {

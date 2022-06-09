@@ -28,7 +28,7 @@ public class ConvertImage {
 
       fw.write("P3\n");
       fw.write(image.getWidth() + " " + image.getHeight() + "\n");
-      fw.write(image.getPixel(0, 0).getMaxColorVal()+ "\n");
+      fw.write(image.getPixel(0, 0).getMaxColorVal() + "\n");
 
       for (int i = 0; i < image.getHeight(); i++) {
         for (int j = 0; j < image.getWidth(); j++) {

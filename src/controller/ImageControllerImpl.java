@@ -211,7 +211,6 @@ public class ImageControllerImpl implements ImageController {
       case "help":
         printHelpMessage();
 
-      case "exit":
       case "q":
         exit = true;
         break;
@@ -221,10 +220,18 @@ public class ImageControllerImpl implements ImageController {
     }
   }
 
+  /**
+   * Sends message to the view to display the help message.
+   */
   private void printHelpMessage() {
     renderViewMessage("Help!\n");
   }
 
+  /**
+   * Sends given text to the view where it displays the message to the output destination.
+   * @param text message to be displayed
+   * @throws IllegalStateException if rendermessage method throws an io exception
+   */
   private void renderViewMessage(String text) throws IllegalStateException {
     try {
       view.renderMessage(text);
