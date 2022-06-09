@@ -24,23 +24,21 @@ public class ConvertImage {
           throws IllegalArgumentException {
     try {
       File newFile = new File(filename);
+      FileWriter fw = new FileWriter(newFile);
 
-      if (newFile.createNewFile()) {
-        FileWriter fw = new FileWriter(newFile);
-        fw.write("P3\n");
-        fw.write(image.getWidth() + " " + image.getHeight() + "\n");
+      fw.write("P3\n");
+      fw.write(image.getWidth() + " " + image.getHeight() + "\n");
+      fw.write(image.getPixel(0, 0).getMaxColorVal()+ "\n");
 
-        for (int i = 0; i < image.getWidth(); i++) {
-          for (int j = 0; j < image.getHeight(); j++) {
-            Pixel pixel = image.getPixel(i, j);
-            fw.write(pixel.getRed() + "\n");
-            fw.write(pixel.getGreen() + "\n");
-            fw.write(pixel.getBlue() + "\n");
-          }
+      for (int i = 0; i < image.getHeight(); i++) {
+        for (int j = 0; j < image.getWidth(); j++) {
+          Pixel pixel = image.getPixel(j, i);
+          fw.write(pixel.getRed() + "\n");
+          fw.write(pixel.getGreen() + "\n");
+          fw.write(pixel.getBlue() + "\n");
         }
-      } else {
-        throw new IllegalArgumentException("File already exists.");
       }
+      fw.close();
     } catch (Exception e) {
       throw new IllegalArgumentException("Converting Image to PPM Error: " + e.getMessage());
     }

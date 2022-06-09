@@ -1,9 +1,10 @@
-package model.filters;
+package filters;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import model.ImageModel;
+import model.filters.Filter;
 
 import static org.junit.Assert.assertArrayEquals;
 

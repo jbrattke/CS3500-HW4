@@ -1,6 +1,10 @@
-package model;
+package image;
 
 import org.junit.Test;
+
+import model.Pixel;
+import model.PixelRGB;
+
 import static org.junit.Assert.assertEquals;
 
 /**

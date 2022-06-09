@@ -1,7 +1,8 @@
-package model.filters;
+package filters;
 
 
 import model.ImageModelRGB;
+import model.filters.RGBFilter;
 import model.util.ImageUtil;
 
 /**

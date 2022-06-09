@@ -51,11 +51,8 @@ public class ImageUtil {
       throw new IllegalArgumentException("Invalid PPM file: plain RAW file should begin with P3");
     }
     int width = sc.nextInt();
-    System.out.println("Width of image: " + width);
     int height = sc.nextInt();
-    System.out.println("Height of image: " + height);
     int maxValue = sc.nextInt();
-    System.out.println("Maximum value of a color in this file (usually 255): " + maxValue);
 
     Pixel[][] pixels = new Pixel[width][height];
     for (int i = 0; i < height; i++) {
@@ -68,6 +65,43 @@ public class ImageUtil {
     }
 
     return pixels;
+  }
+
+  /**
+   * Converts given ppm to ImageModel, and compares models.
+   * @param filename1
+   * @param filename2
+   * @return true if models are equal, false otherwise
+   */
+  public static boolean comparePPM(String filename1, String filename2) {
+    Pixel[][] pixels1 = null;
+    Pixel[][] pixels2 = null;
+    try {
+      pixels1 = readPPM(filename1);
+      pixels2 = readPPM(filename2);
+    } catch (IllegalArgumentException e) {
+      return false;
+    }
+
+    if (pixels1.length != pixels2.length) {
+      return false;
+    }
+
+    if (pixels1[0].length != pixels2[0].length) {
+      return false;
+    }
+
+    for (int i = 0; i < pixels1.length; i++) {
+      for (int j = 0; j < pixels1[0].length; j++) {
+        if (pixels1[i][j].getRed() != pixels2[i][j].getRed()
+                || pixels1[i][j].getGreen() != pixels2[i][j].getGreen()
+                || pixels1[i][j].getBlue() != pixels2[i][j].getBlue()) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 }
 

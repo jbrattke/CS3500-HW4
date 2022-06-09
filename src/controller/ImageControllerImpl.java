@@ -81,19 +81,20 @@ public class ImageControllerImpl implements ImageController {
         } else {
           images.put(inputArray[2], new ImageModelRGB(pixel));
         }
+        renderViewMessage("Loaded " + inputArray[1] + " successfully!\n");
         break;
 
       case "save":
         if (images.containsKey(inputArray[2])) {
           if (inputArray[1].split("\\.").length > 1
-                  && inputArray[1].split("\\.")[1] == "ppm") {
-            System.out.println("HEllo");
+                  && inputArray[1].split("\\.")[1].equals("ppm")) {
             convertImageToPPM(images.get(inputArray[2]), inputArray[1]);
           } else {
             convertImageToFile(images.get(inputArray[2]), inputArray[1]);
           }
+          renderViewMessage("Saved " + inputArray[1] + " successfully!\n");
         } else {
-          renderViewMessage("Image with name does not exist!");
+          renderViewMessage("Image with name does not exist!\n");
         }
         break;
 
@@ -102,8 +103,9 @@ public class ImageControllerImpl implements ImageController {
           Filter redFilter = new RGBFilter(0);
           ImageModel filteredImage = redFilter.apply(images.get(inputArray[1]));
           images.put(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
-          renderViewMessage("Image with name does not exist!");
+          renderViewMessage("Image with name does not exist!\n");
         }
         break;
 
@@ -112,8 +114,9 @@ public class ImageControllerImpl implements ImageController {
           Filter greenFilter = new RGBFilter(1);
           ImageModel filteredImage = greenFilter.apply(images.get(inputArray[1]));
           images.put(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
-          renderViewMessage("Image with name does not exist!");
+          renderViewMessage("Image with name does not exist!\n");
         }
         break;
 
@@ -122,8 +125,9 @@ public class ImageControllerImpl implements ImageController {
           Filter blueFilter = new RGBFilter(2);
           ImageModel filteredImage = blueFilter.apply(images.get(inputArray[1]));
           images.put(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
-          renderViewMessage("Image with name does not exist!");
+          renderViewMessage("Image with name does not exist!\n");
         }
         break;
 
@@ -132,8 +136,9 @@ public class ImageControllerImpl implements ImageController {
           Filter valueFilter = new ValueFilter();
           ImageModel filteredImage = valueFilter.apply(images.get(inputArray[1]));
           images.put(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
-          renderViewMessage("Image with name does not exist!");
+          renderViewMessage("Image with name does not exist!\n");
         }
         break;
 
@@ -142,8 +147,9 @@ public class ImageControllerImpl implements ImageController {
           Filter lumaFilter = new LumaFilter();
           ImageModel filteredImage = lumaFilter.apply(images.get(inputArray[1]));
           images.put(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
-          renderViewMessage("Image with name does not exist!");
+          renderViewMessage("Image with name does not exist!\n");
         }
         break;
 
@@ -152,8 +158,9 @@ public class ImageControllerImpl implements ImageController {
           Filter intensityFilter = new IntensityFilter();
           ImageModel filteredImage = intensityFilter.apply(images.get(inputArray[1]));
           images.put(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
-          renderViewMessage("Image with name does not exist!");
+          renderViewMessage("Image with name does not exist!\n");
         }
         break;
 
@@ -162,8 +169,9 @@ public class ImageControllerImpl implements ImageController {
           Filter horizontalFlipFilter = new HorizontalFlipFilter();
           ImageModel filteredImage = horizontalFlipFilter.apply(images.get(inputArray[1]));
           images.put(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
-          renderViewMessage("Image with name does not exist!");
+          renderViewMessage("Image with name does not exist!\n");
         }
         break;
 
@@ -172,8 +180,9 @@ public class ImageControllerImpl implements ImageController {
           Filter verticalFlipFilter = new VerticalFlipFilter();
           ImageModel filteredImage = verticalFlipFilter.apply(images.get(inputArray[1]));
           images.put(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
-          renderViewMessage("Image with name does not exist!");
+          renderViewMessage("Image with name does not exist!\n");
         }
         break;
 
@@ -182,8 +191,9 @@ public class ImageControllerImpl implements ImageController {
           Filter brightnessFilter = new BrightnessFilter(Integer.parseInt(inputArray[1]));
           ImageModel filteredImage = brightnessFilter.apply(images.get(inputArray[2]));
           images.put(inputArray[3], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[3] + "\n");
         } else {
-          renderViewMessage("Image with name does not exist!");
+          renderViewMessage("Image with name does not exist!\n");
         }
         break;
 
@@ -192,8 +202,9 @@ public class ImageControllerImpl implements ImageController {
           Filter brightnessFilter = new BrightnessFilter(Integer.parseInt(inputArray[1]) * -1);
           ImageModel filteredImage = brightnessFilter.apply(images.get(inputArray[2]));
           images.put(inputArray[3], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[3] + "\n");
         } else {
-          renderViewMessage("Image with name does not exist!");
+          renderViewMessage("Image with name does not exist!\n");
         }
         break;
 
@@ -206,7 +217,7 @@ public class ImageControllerImpl implements ImageController {
         break;
 
       default:
-        renderViewMessage("Invalid input");
+        renderViewMessage("Invalid input\n");
     }
   }
 

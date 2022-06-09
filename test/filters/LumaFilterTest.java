@@ -1,6 +1,7 @@
-package model.filters;
+package filters;
 
 import model.ImageModelRGB;
+import model.filters.LumaFilter;
 import model.util.ImageUtil;
 
 /**

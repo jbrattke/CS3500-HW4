@@ -1,6 +1,11 @@
-package model;
+package image;
 
 import org.junit.Test;
+
+import model.ImageModel;
+import model.ImageModelRGB;
+import model.Pixel;
+import model.PixelRGB;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;

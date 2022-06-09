@@ -3,6 +3,7 @@ package controller;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
@@ -11,7 +12,9 @@ import controller.ImageControllerImpl;
 import view.ImageView;
 import view.ImageViewImpl;
 
+import static model.util.ImageUtil.comparePPM;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests the controller implementation, uses a corrupted appendable and mock views and models
@@ -22,42 +25,42 @@ public class TestControllerImpl {
   // tests error if the appendable is invalid.
   @Test (expected = IllegalStateException.class)
   public void testBadAppendable() {
-
-    String inputString = "exit";
-
-    StringReader in = new StringReader(inputString);
-
-    // OutputStream out = new ByteArrayOutputStream();
-
     Appendable log = new CorruptAppendable();
-
     ImageView view = new ImageViewImpl(log);
 
+    StringReader in = new StringReader("exit");
     ImageControllerImpl controller = new ImageControllerImpl(in,view);
+    controller.run();
+  }
 
+  @Test
+  public void testQuitRightAway() {
+    StringBuilder log = new StringBuilder();
+    ImageView view = new ImageViewImpl(log);
+
+    StringReader in = new StringReader("exit");
+    ImageControllerImpl controller = new ImageControllerImpl(in,view);
     controller.run();
 
     assertEquals("Welcome to the image program!\n", log.toString());
   }
 
   @Test
-  public void testQuitRightAway() {
-
-    String inputString = "exit";
-
-    StringReader in = new StringReader(inputString);
-
-    OutputStream out = new ByteArrayOutputStream();
-
+  public void loadAndSaveTest() {
     StringBuilder log = new StringBuilder();
-
     ImageView view = new ImageViewImpl(log);
 
+    StringReader in = new StringReader("load img/koala.ppm koala\n"
+        + "save test.ppm koala\n"
+        + "exit");
     ImageControllerImpl controller = new ImageControllerImpl(in,view);
-
     controller.run();
 
-    assertEquals("Welcome to the image program!\n", log.toString());
+    assertTrue(comparePPM("img/koala.ppm", "test.ppm"));
+
+    //deleting test files
+    File file = new File("test.ppm");
+    file.delete();
   }
 
   /**
