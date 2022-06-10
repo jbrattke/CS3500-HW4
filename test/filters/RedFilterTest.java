@@ -3,7 +3,7 @@ package filters;
 
 import model.ImageModelRGB;
 import model.filters.RGBFilter;
-import model.util.ImageUtil;
+import model.ImageUtil;
 
 /**
  * This class is used for testing the red greyscale filter.

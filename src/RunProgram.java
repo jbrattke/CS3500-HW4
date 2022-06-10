@@ -2,6 +2,8 @@ import java.io.InputStreamReader;
 
 import controller.ImageController;
 import controller.ImageControllerImpl;
+import model.ImageCache;
+import model.ImageCacheModel;
 import view.ImageView;
 import view.ImageViewImpl;
 
@@ -17,7 +19,9 @@ public class RunProgram {
    */
   public static void main(String[] args) {
     ImageView view = new ImageViewImpl(System.out);
-    ImageController program = new ImageControllerImpl(new InputStreamReader(System.in), view);
+    ImageCache cache = new ImageCacheModel();
+    ImageController program = new ImageControllerImpl(cache, view,
+            new InputStreamReader(System.in));
     program.run();
   }
 }

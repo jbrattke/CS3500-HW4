@@ -25,9 +25,10 @@ public class BrightnessFilter extends FilterModel {
    */
   @Override
   protected Pixel applyFilterToPixel(Pixel pixel) {
-    int red = Math.min(pixel.getRed() + value, 255);
-    int green = Math.min(pixel.getGreen() + value, 255);
-    int blue = Math.min(pixel.getBlue() + value, 255);
+    int maxVal = pixel.getMaxColorVal();
+    int red = Math.max(Math.min(pixel.getRed() + value, maxVal), 0);
+    int green = Math.max(Math.min(pixel.getGreen() + value, maxVal), 0);
+    int blue = Math.max(Math.min(pixel.getBlue() + value, maxVal), 0);
     return new PixelRGB(red, green, blue, pixel.getMaxColorVal());
   }
 }

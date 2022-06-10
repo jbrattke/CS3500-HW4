@@ -1,9 +1,9 @@
 package controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
 import java.util.Scanner;
 
+import model.ImageCache;
 import model.filters.BrightnessFilter;
 import model.filters.Filter;
 import model.ImageModel;
@@ -13,13 +13,14 @@ import model.filters.LumaFilter;
 import model.filters.RGBFilter;
 import model.filters.ValueFilter;
 import model.filters.VerticalFlipFilter;
-import model.util.ImageUtil;
+import model.ImageUtil;
 import model.Pixel;
 import model.ImageModelRGB;
 import view.ImageView;
 
-import static model.util.ConvertImage.convertImageToFile;
-import static model.util.ConvertImage.convertImageToPPM;
+import static model.ImageUtil.convertFileToImage;
+import static model.ImageUtil.convertImageToFile;
+import static model.ImageUtil.convertImageToPPM;
 
 /**
  * Controller implementation to take input from the user and manage the model and view
@@ -28,21 +29,21 @@ import static model.util.ConvertImage.convertImageToPPM;
 public class ImageControllerImpl implements ImageController {
   private final Readable in;
   private final ImageView view;
-  private Map<String, ImageModel> images;
+  private ImageCache images;
   private boolean exit = false; //state tracker for the program
 
   /**
    * Constructor for ImageControllerImpl.
    * @param r the Readable object
    */
-  public ImageControllerImpl(Readable r, ImageView view) {
-    images = new HashMap<String, ImageModel>();
-    in = r;
+  public ImageControllerImpl(ImageCache images, ImageView view, Readable r) {
+    this.images = images;
+    this.in = r;
     this.view = view;
   }
 
   /**
-   * This method runs the program. ??
+   * This method runs the program. Takes input from readable and outputs to view.
    * @throws IllegalStateException if appendable cannot be printed to
    * @throws IllegalArgumentException if there is no input from controller readable
    */
@@ -50,7 +51,7 @@ public class ImageControllerImpl implements ImageController {
   public void run() throws IllegalStateException, IllegalArgumentException {
     Scanner inScan = new Scanner(in);
 
-    renderViewMessage("Welcome to the image program!\n");
+    renderViewMessage("Welcome to the image program!\nEnter 'help' for a list of commands.\n");
 
     while (!exit) {
       if (inScan.hasNextLine()) {
@@ -75,22 +76,30 @@ public class ImageControllerImpl implements ImageController {
   private void processInput(String[] inputArray) {
     switch (inputArray[0]) {
       case "load":
-        Pixel[][] pixel = ImageUtil.readPPM(inputArray[1]);
-        if (images.containsKey(inputArray[1])) {
-          images.replace(inputArray[1], new ImageModelRGB(pixel));
+        if (inputArray[1].split("\\.")[1].equals("ppm")) {
+          Pixel[][] pixel = ImageUtil.readPPM(inputArray[1]);
+          images.addImage(inputArray[2], new ImageModelRGB(pixel));
         } else {
-          images.put(inputArray[2], new ImageModelRGB(pixel));
+          ImageModel image = convertFileToImage(inputArray[1]);
+          images.addImage(inputArray[2], image);
         }
+
         renderViewMessage("Loaded " + inputArray[1] + " successfully!\n");
         break;
 
       case "save":
-        if (images.containsKey(inputArray[2])) {
+        String[] validExtensions = {"ppm", "png", "jpg", "jpeg"};
+        if (images.hasImage(inputArray[2])) {
+          if (!Arrays.asList(validExtensions).contains(inputArray[1].split("\\.")[1])) {
+            renderViewMessage("Error: Invalid file extension!\n");
+            break;
+          }
+
           if (inputArray[1].split("\\.").length > 1
                   && inputArray[1].split("\\.")[1].equals("ppm")) {
-            convertImageToPPM(images.get(inputArray[2]), inputArray[1]);
+            convertImageToPPM(images.getImage(inputArray[2]), inputArray[1]);
           } else {
-            convertImageToFile(images.get(inputArray[2]), inputArray[1]);
+            convertImageToFile(images.getImage(inputArray[2]), inputArray[1]);
           }
           renderViewMessage("Saved " + inputArray[1] + " successfully!\n");
         } else {
@@ -99,10 +108,10 @@ public class ImageControllerImpl implements ImageController {
         break;
 
       case "red-component":
-        if (images.containsKey(inputArray[1])) {
+        if (images.hasImage(inputArray[1])) {
           Filter redFilter = new RGBFilter(0);
-          ImageModel filteredImage = redFilter.apply(images.get(inputArray[1]));
-          images.put(inputArray[2], filteredImage);
+          ImageModel filteredImage = redFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
           renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
           renderViewMessage("Image with name does not exist!\n");
@@ -110,10 +119,10 @@ public class ImageControllerImpl implements ImageController {
         break;
 
       case "green-component":
-        if (images.containsKey(inputArray[1])) {
+        if (images.hasImage(inputArray[1])) {
           Filter greenFilter = new RGBFilter(1);
-          ImageModel filteredImage = greenFilter.apply(images.get(inputArray[1]));
-          images.put(inputArray[2], filteredImage);
+          ImageModel filteredImage = greenFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
           renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
           renderViewMessage("Image with name does not exist!\n");
@@ -121,10 +130,10 @@ public class ImageControllerImpl implements ImageController {
         break;
 
       case "blue-component":
-        if (images.containsKey(inputArray[1])) {
+        if (images.hasImage(inputArray[1])) {
           Filter blueFilter = new RGBFilter(2);
-          ImageModel filteredImage = blueFilter.apply(images.get(inputArray[1]));
-          images.put(inputArray[2], filteredImage);
+          ImageModel filteredImage = blueFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
           renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
           renderViewMessage("Image with name does not exist!\n");
@@ -132,10 +141,10 @@ public class ImageControllerImpl implements ImageController {
         break;
 
       case "value-component":
-        if (images.containsKey(inputArray[1])) {
+        if (images.hasImage(inputArray[1])) {
           Filter valueFilter = new ValueFilter();
-          ImageModel filteredImage = valueFilter.apply(images.get(inputArray[1]));
-          images.put(inputArray[2], filteredImage);
+          ImageModel filteredImage = valueFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
           renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
           renderViewMessage("Image with name does not exist!\n");
@@ -143,10 +152,10 @@ public class ImageControllerImpl implements ImageController {
         break;
 
       case "luma-component":
-        if (images.containsKey(inputArray[1])) {
+        if (images.hasImage(inputArray[1])) {
           Filter lumaFilter = new LumaFilter();
-          ImageModel filteredImage = lumaFilter.apply(images.get(inputArray[1]));
-          images.put(inputArray[2], filteredImage);
+          ImageModel filteredImage = lumaFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
           renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
           renderViewMessage("Image with name does not exist!\n");
@@ -154,10 +163,10 @@ public class ImageControllerImpl implements ImageController {
         break;
 
       case "intensity-component":
-        if (images.containsKey(inputArray[1])) {
+        if (images.hasImage(inputArray[1])) {
           Filter intensityFilter = new IntensityFilter();
-          ImageModel filteredImage = intensityFilter.apply(images.get(inputArray[1]));
-          images.put(inputArray[2], filteredImage);
+          ImageModel filteredImage = intensityFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
           renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
           renderViewMessage("Image with name does not exist!\n");
@@ -165,10 +174,10 @@ public class ImageControllerImpl implements ImageController {
         break;
 
       case "horizontal-flip":
-        if (images.containsKey(inputArray[1])) {
+        if (images.hasImage(inputArray[1])) {
           Filter horizontalFlipFilter = new HorizontalFlipFilter();
-          ImageModel filteredImage = horizontalFlipFilter.apply(images.get(inputArray[1]));
-          images.put(inputArray[2], filteredImage);
+          ImageModel filteredImage = horizontalFlipFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
           renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
           renderViewMessage("Image with name does not exist!\n");
@@ -176,10 +185,10 @@ public class ImageControllerImpl implements ImageController {
         break;
 
       case "vertical-flip":
-        if (images.containsKey(inputArray[1])) {
+        if (images.hasImage(inputArray[1])) {
           Filter verticalFlipFilter = new VerticalFlipFilter();
-          ImageModel filteredImage = verticalFlipFilter.apply(images.get(inputArray[1]));
-          images.put(inputArray[2], filteredImage);
+          ImageModel filteredImage = verticalFlipFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
           renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
         } else {
           renderViewMessage("Image with name does not exist!\n");
@@ -187,10 +196,10 @@ public class ImageControllerImpl implements ImageController {
         break;
 
       case "brighten":
-        if (images.containsKey(inputArray[2])) {
+        if (images.hasImage(inputArray[2])) {
           Filter brightnessFilter = new BrightnessFilter(Integer.parseInt(inputArray[1]));
-          ImageModel filteredImage = brightnessFilter.apply(images.get(inputArray[2]));
-          images.put(inputArray[3], filteredImage);
+          ImageModel filteredImage = brightnessFilter.apply(images.getImage(inputArray[2]));
+          images.addImage(inputArray[3], filteredImage);
           renderViewMessage("Filter applied to: " + inputArray[3] + "\n");
         } else {
           renderViewMessage("Image with name does not exist!\n");
@@ -198,10 +207,10 @@ public class ImageControllerImpl implements ImageController {
         break;
 
       case "darken":
-        if (images.containsKey(inputArray[2])) {
+        if (images.hasImage(inputArray[2])) {
           Filter brightnessFilter = new BrightnessFilter(Integer.parseInt(inputArray[1]) * -1);
-          ImageModel filteredImage = brightnessFilter.apply(images.get(inputArray[2]));
-          images.put(inputArray[3], filteredImage);
+          ImageModel filteredImage = brightnessFilter.apply(images.getImage(inputArray[2]));
+          images.addImage(inputArray[3], filteredImage);
           renderViewMessage("Filter applied to: " + inputArray[3] + "\n");
         } else {
           renderViewMessage("Image with name does not exist!\n");
@@ -225,7 +234,31 @@ public class ImageControllerImpl implements ImageController {
    * Sends message to the view to display the help message.
    */
   private void printHelpMessage() {
-    renderViewMessage("Help!\n");
+    renderViewMessage("List of commands: " + "\n" +
+            "load <image file> <image name> - Loads an image from a file" + "\n" +
+            "save <image file> <image name> - Saves an image to a file" + "\n" +
+            "red-component <image name> <new image name> - Creates a new image with the " +
+            "red component of the original image" + "\n" +
+            "green-component <image name> <new image name> - Creates a new image with the " +
+            "green component of the original image" + "\n" +
+            "blue-component <image name> <new image name> - Creates a new image with the " +
+            "blue component of the original image" + "\n" +
+            "value-component <image name> <new image name> - Creates a new image with the " +
+            "value component of the original image" + "\n" +
+            "luma-component <image name> <new image name> - Creates a new image with the " +
+            "luma component of the original image" + "\n" +
+            "intensity-component <image name> <new image name> - Creates a new image with " +
+            "the intensity component of the original image" + "\n" +
+            "horizontal-flip <image name> <new image name> - Creates a new image with the " +
+            "horizontal flip of the original image" + "\n" +
+            "vertical-flip <image name> <new image name> - Creates a new image with the " +
+            "vertical flip of the original image" + "\n" +
+            "brighten <amount> <image name> <new image name> - Creates a new image with " +
+            "the brightness increased by the amount" + "\n" +
+            "darken <amount> <image name> <new image name> - Creates a new image with the " +
+            "brightness decreased by the amount" + "\n" +
+            "help - Prints this message" + "\n" +
+            "q - Exits the program" + "\n");
   }
 
   /**

@@ -2,7 +2,7 @@ package filters;
 
 import model.ImageModelRGB;
 import model.filters.BrightnessFilter;
-import model.util.ImageUtil;
+import model.ImageUtil;
 
 /**
  * Tests the brightness filter class.

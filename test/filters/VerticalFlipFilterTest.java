@@ -2,7 +2,7 @@ package filters;
 
 import model.ImageModelRGB;
 import model.filters.VerticalFlipFilter;
-import model.util.ImageUtil;
+import model.ImageUtil;
 
 /**
  * This class is used for testing the vertical flip filter.

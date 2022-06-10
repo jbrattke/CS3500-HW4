@@ -10,33 +10,33 @@ public interface Pixel {
    *
    * @return the red component of the pixel
    */
-  public int getRed();
+  int getRed();
 
   /**
    * Gets the green component of the pixel.
    *
    * @return the green component of the pixel
    */
-  public int getGreen();
+  int getGreen();
 
   /**
    * Gets the blue component of the pixel.
    *
    * @return the blue component of the pixel
    */
-  public int getBlue();
+  int getBlue();
 
   /**
    * Gets all color channels from pixel.
    *
    * @return the color channels of pixel as an array
    */
-  public int[] getAllChannels();
+  int[] getAllChannels();
 
   /**
    * Gets max color value for pixel.
    *
    * @return the color channels of pixel as an array
    */
-  public int getMaxColorVal();
+  int getMaxColorVal();
 }

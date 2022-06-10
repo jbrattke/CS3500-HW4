@@ -12,9 +12,10 @@ public class PixelRGB implements Pixel {
 
   /**
    * Creates a new pixel with the given color channels.
-   * @param red pixel's red value
+   *
+   * @param red   pixel's red value
    * @param green pixel's green value
-   * @param blue pixel's blue value
+   * @param blue  pixel's blue value
    * @throws IllegalArgumentException if RBG values are not between 0 and 255
    */
   public PixelRGB(int red, int green, int blue, int maxVal) throws IllegalArgumentException {
@@ -64,7 +65,7 @@ public class PixelRGB implements Pixel {
    */
   @Override
   public int[] getAllChannels() {
-    return new int[] {red, green, blue};
+    return new int[]{red, green, blue};
   }
 
   /**

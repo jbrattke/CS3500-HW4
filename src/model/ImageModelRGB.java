@@ -44,8 +44,8 @@ public class ImageModelRGB implements ImageModel {
    *
    * @param x the x coordinate
    * @param y the y coordinate
-   * @throws IllegalArgumentException if the coordinates are out of bounds
    * @return the pixel at the specified coordinates
+   * @throws IllegalArgumentException if the coordinates are out of bounds
    */
   @Override
   public Pixel getPixel(int x, int y) throws IllegalArgumentException {
