@@ -1,7 +1,64 @@
-## Image Program
+## Assignment 4 - CS3500
+
+### Design Overview
+#### Model
+*ImageCache:* An interface for storing images.  
+*ImageCacheModel:* Implementation of ImageCache.  
+*ImageModel:* An interface for images, representing a single image.  
+*ImageModelRGB:* Implementation of ImageModel, representing an image in RGB format.  
+*ImageUtils:* A collection of file-related utility functions for images.  
+*Pixel:* An interface for pixel data.  
+*PixelRGB:* Implementation of Pixel, representing a pixel in RGB format.  
+*Filter:* An interface for filters.  
+*FilterModel:* Abstract class that implements the Filter interface.
+Used for filters that change pixel channel values.  
+*FlipFilterModel:* Abstract class that implements the Filter interface. 
+Used for filters that flip/transform an image.  
+*BrightnessFilter:* Brightness filter that extends the FilterModel class. 
+Filter used for brightening/darkening an image.  
+*LumaFilter:* Luma filter that extends the FilterModel class. 
+Filter used for greyscaling an image using the luma value of each pixel.  
+*ValueFilter:* Value filter that extends the FilterModel class.
+Filter used for greyscaling an image using the max channel value of each pixel.  
+*IntensityFilter:* Intensity filter that extends the FilterModel class.
+Filter used for greyscaling an image using the average channel value of each pixel.  
+*RGBFilter:* RGB filter that extends the FilterModel class.
+Filter used for greyscaling an image depending on which channel was specified in constructor.  
+*HorizontalFlipFilter:* Horizontal flip filter that extends the FlipFilterModel class.
+Filter used for flipping an image horizontally.  
+*VerticalFlipFilter:* Vertical flip filter that extends the FlipFilterModel class.
+Filter used for flipping an image vertically.  
+
+#### Controller
+*ImageController:* An interface for the controller of the project program.  
+*ImageControllerImpl:* Implementation of ImageController, used to run the project program.
+
+#### View
+*ImageView:* An interface for the view of the project program.
+*ImageViewImpl:* Implementation of ImageView. Used for rendering messages/views to
+given appendable.
 
 ### Running Program:
-To run the program, go to the RunProgram class, make sure to have an ImageView and ImageController created in the main method, then call the ImageController's run method.
+To run the program, simply navigate to the RunProgram class and run the main() method. The program will prompt
+the user for input through the console that it launches.  
+
+### Script:
+- This script applies several filters to an image and saves the resulting images. Run program and enter each line followed by the key 'enter' to run script.
+1. load res/capybara.ppm capybara
+2. red-component capybara red
+3. horizontal-flip capybara horizontal
+4. value-filter capybara value
+5. brighten 50 capybara bright
+6. load red.ppm red
+7. load horizontal.ppm horizontal
+8. load value.ppm value
+9. load bright.ppm bright
+10. q
+
+### Image credit:
+*Res/capybara.png* image credit: Pixnio  
+Image is free to use for creative and commercial use  
+https://pixnio.com/fauna-animals/wildlife-marmot-nature-wild-fur-animal-green-grass-mammal
 
 ### Commands:
 

@@ -71,6 +71,20 @@ public class TestControllerImpl {
   }
 
   @Test
+  public void testInvalidInput() {
+    StringBuilder log = new StringBuilder();
+    ImageView view = new ImageViewImpl(log);
+
+    StringReader in = new StringReader("sadasf\n" + "q");
+    ImageCache cache = new ImageCacheModel();
+    ImageControllerImpl controller = new ImageControllerImpl(cache, view, in);
+    controller.run();
+
+    assertEquals("Welcome to the image program!\nEnter 'help' for a list of commands.\n"
+            + "Invalid input\n", log.toString());
+  }
+
+  @Test
   public void loadAndSavePPMTest() {
     StringBuilder log = new StringBuilder();
     ImageView view = new ImageViewImpl(log);
