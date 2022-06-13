@@ -1,0 +1,15 @@
+load res/capybara.ppm capy
+blur capy blur
+blur blur blur
+blur blur blur
+blur blur blur
+blur blur blur
+blur blur blur
+blur blur blur
+blur blur blur
+blur blur blur
+blur blur blur
+blur blur blur
+blur blur blur
+save blur.png blur
+q

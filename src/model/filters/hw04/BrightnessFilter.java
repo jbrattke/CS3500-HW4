@@ -1,7 +1,8 @@
-package model.filters;
+package model.filters.hw04;
 
 import model.Pixel;
 import model.PixelRGB;
+import model.filters.hw04.FilterModel;
 
 /**
  * Filter that makes all of a pixel's values brighter by a given value.

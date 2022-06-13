@@ -10,13 +10,13 @@ import model.ImageCache;
 import model.ImageCacheModel;
 import model.ImageModel;
 import model.ImageModelRGB;
-import model.filters.BrightnessFilter;
-import model.filters.HorizontalFlipFilter;
-import model.filters.IntensityFilter;
-import model.filters.LumaFilter;
-import model.filters.RGBFilter;
-import model.filters.ValueFilter;
-import model.filters.VerticalFlipFilter;
+import model.filters.hw04.BrightnessFilter;
+import model.filters.hw04.HorizontalFlipFilter;
+import model.filters.hw04.IntensityFilter;
+import model.filters.hw04.LumaFilter;
+import model.filters.hw04.RGBFilter;
+import model.filters.hw04.ValueFilter;
+import model.filters.hw04.VerticalFlipFilter;
 import view.ImageView;
 import view.ImageViewImpl;
 import view.MockView;
@@ -53,6 +53,42 @@ public class TestControllerImpl {
     ImageCache cache = new ImageCacheModel();
     ImageControllerImpl controller = new ImageControllerImpl(cache, view, in);
     controller.run();
+  }
+
+  @Test
+  public void testBadExtensionSave() {
+    StringBuilder log = new StringBuilder();
+    ImageView view = new ImageViewImpl(log);
+
+    StringReader in = new StringReader("load res/capybara.ppm capybara\n"
+            + "save test.txt capybara\n"
+            + "q");
+    ImageCache cache = new ImageCacheModel();
+    ImageControllerImpl controller = new ImageControllerImpl(cache, view, in);
+    controller.run();
+
+    assertEquals("Welcome to the image program!\nEnter 'help' for a list of commands.\n" +
+                    "Loaded res/capybara.ppm successfully!\n" +
+                    "Error: Invalid file extension!\n",
+            log.toString());
+  }
+
+  @Test
+  public void testBadNameGiven() {
+    StringBuilder log = new StringBuilder();
+    ImageView view = new ImageViewImpl(log);
+
+    StringReader in = new StringReader("load res/capybara.ppm capybara\n"
+            + "save test.ppm yeehaw\n"
+            + "q");
+    ImageCache cache = new ImageCacheModel();
+    ImageControllerImpl controller = new ImageControllerImpl(cache, view, in);
+    controller.run();
+
+    assertEquals("Welcome to the image program!\nEnter 'help' for a list of commands.\n" +
+                    "Loaded res/capybara.ppm successfully!\n" +
+                    "Image with name does not exist!\n",
+            log.toString());
   }
 
   // tests quiting as first action.

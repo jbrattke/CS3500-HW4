@@ -1,8 +1,9 @@
-package model.filters;
+package model.filters.hw04;
 
 import model.ImageModel;
 import model.ImageModelRGB;
 import model.Pixel;
+import model.filters.Filter;
 
 /**
  * Abstract class for filters that flip an image to unify them, seperating them from

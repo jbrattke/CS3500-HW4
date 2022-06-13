@@ -1,7 +1,7 @@
 package filters;
 
 import model.ImageModelRGB;
-import model.filters.IntensityFilter;
+import model.filters.hw04.IntensityFilter;
 import model.ImageUtil;
 
 /**

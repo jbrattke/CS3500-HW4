@@ -1,4 +1,4 @@
-package model.filters;
+package model.filters.hw04;
 
 import model.ImageModel;
 import model.Pixel;

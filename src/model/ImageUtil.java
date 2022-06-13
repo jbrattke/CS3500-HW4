@@ -6,9 +6,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.StringReader;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
+
+import controller.ImageControllerImpl;
+import view.ImageView;
+import view.ImageViewImpl;
 
 /**
  * This class contains utility methods to read and write images.
@@ -188,6 +193,37 @@ public class ImageUtil {
       }
     }
     return new ImageModelRGB(pixels);
+  }
+
+  /**
+   * This method is used to run a script, the script must follow the controller format.
+   * @param filename path of script
+   */
+  public static void runScript(String filename) {
+    Scanner sc;
+
+    try {
+      sc = new Scanner(new FileInputStream(filename));
+    } catch (FileNotFoundException e) {
+      throw new IllegalArgumentException("File " + filename + " not found!");
+    }
+
+    String script = "";
+    //read the file line by line, and populate a string. This will throw away any comment lines
+    while (sc.hasNextLine()) {
+      String s = sc.nextLine();
+      if (s.charAt(0) != '#') {
+        script += s + "\n";
+      }
+    }
+
+    //RUNNING SCRIPT
+    StringBuilder log = new StringBuilder();
+    ImageView view = new ImageViewImpl(log);
+    StringReader in = new StringReader(script);
+    ImageCache cache = new ImageCacheModel();
+    ImageControllerImpl controller = new ImageControllerImpl(cache, view, in);
+    controller.run();
   }
 }
 

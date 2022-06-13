@@ -1,8 +1,9 @@
-package model.filters;
+package model.filters.hw04;
 
 import model.ImageModel;
 import model.ImageModelRGB;
 import model.Pixel;
+import model.filters.Filter;
 
 /**
  * Abstract class that is used for pixel value manipulation filters to unify them

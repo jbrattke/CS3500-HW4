@@ -2,7 +2,7 @@ package filters;
 
 
 import model.ImageModelRGB;
-import model.filters.RGBFilter;
+import model.filters.hw04.RGBFilter;
 import model.ImageUtil;
 
 /**

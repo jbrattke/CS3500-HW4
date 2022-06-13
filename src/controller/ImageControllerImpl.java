@@ -4,15 +4,19 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 import model.ImageCache;
-import model.filters.BrightnessFilter;
+import model.filters.BlurFilter;
+import model.filters.GreyscaleFilter;
+import model.filters.SepiaFilter;
+import model.filters.SharpenFilter;
+import model.filters.hw04.BrightnessFilter;
 import model.filters.Filter;
 import model.ImageModel;
-import model.filters.HorizontalFlipFilter;
-import model.filters.IntensityFilter;
-import model.filters.LumaFilter;
-import model.filters.RGBFilter;
-import model.filters.ValueFilter;
-import model.filters.VerticalFlipFilter;
+import model.filters.hw04.HorizontalFlipFilter;
+import model.filters.hw04.IntensityFilter;
+import model.filters.hw04.LumaFilter;
+import model.filters.hw04.RGBFilter;
+import model.filters.hw04.ValueFilter;
+import model.filters.hw04.VerticalFlipFilter;
 import model.ImageUtil;
 import model.Pixel;
 import model.ImageModelRGB;
@@ -214,6 +218,59 @@ public class ImageControllerImpl implements ImageController {
           renderViewMessage("Filter applied to: " + inputArray[3] + "\n");
         } else {
           renderViewMessage("Image with name does not exist!\n");
+        }
+        break;
+
+      case "blur":
+        if (images.hasImage(inputArray[1])) {
+          Filter blurFilter = new BlurFilter();
+          ImageModel filteredImage = blurFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
+        } else {
+          renderViewMessage("Image with name does not exist!\n");
+        }
+        break;
+
+      case "sharpen":
+        if (images.hasImage(inputArray[1])) {
+          Filter sharpenFilter = new SharpenFilter();
+          ImageModel filteredImage = sharpenFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
+        } else {
+          renderViewMessage("Image with name does not exist!\n");
+        }
+        break;
+
+      case "sepia":
+        if (images.hasImage(inputArray[1])) {
+          Filter sepiaFilter = new SepiaFilter();
+          ImageModel filteredImage = sepiaFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
+        } else {
+          renderViewMessage("Image with name does not exist!\n");
+        }
+        break;
+
+      case "greyscale":
+        if (images.hasImage(inputArray[1])) {
+          Filter greyscaleFilter = new GreyscaleFilter();
+          ImageModel filteredImage = greyscaleFilter.apply(images.getImage(inputArray[1]));
+          images.addImage(inputArray[2], filteredImage);
+          renderViewMessage("Filter applied to: " + inputArray[2] + "\n");
+        } else {
+          renderViewMessage("Image with name does not exist!\n");
+        }
+        break;
+
+      case "-file":
+        if (inputArray.length > 1) {
+          ImageUtil.runScript(inputArray[1]);
+          renderViewMessage("Script run successfully!\n");
+        } else {
+          renderViewMessage("No script file specified!\n");
         }
         break;
 

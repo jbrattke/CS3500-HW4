@@ -1,7 +1,7 @@
 package filters;
 
 import model.ImageModelRGB;
-import model.filters.ValueFilter;
+import model.filters.hw04.ValueFilter;
 import model.ImageUtil;
 
 /**

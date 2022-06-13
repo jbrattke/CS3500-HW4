@@ -1,7 +1,7 @@
 package filters;
 
 import model.ImageModelRGB;
-import model.filters.VerticalFlipFilter;
+import model.filters.hw04.VerticalFlipFilter;
 import model.ImageUtil;
 
 /**
