@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -25,7 +26,6 @@ import view.ImageView;
 public class ImageViewGUI extends JFrame implements ImageView, ActionListener {
   ImageCache cache;
   private JLabel messageLabel;
-  private JScrollPane layerPanel;
   private ControllerFeatures controller;
 
   public ImageViewGUI(ImageCache cache) {
@@ -59,11 +59,6 @@ public class ImageViewGUI extends JFrame implements ImageView, ActionListener {
 
     //LAYER PANEL
     JPanel layers = new LayerPanel(this.cache, this);
-//    layerPanel = new JScrollPane(layers);
-//    layerPanel.setBorder(BorderFactory.createTitledBorder("Image Layers"));
-//    layerPanel.setPreferredSize(new Dimension(200, 768));
-//    layerPanel.getVerticalScrollBar().setUnitIncrement(16);
-//    layerPanel.getHorizontalScrollBar().setUnitIncrement(16);
     this.add(layers, BorderLayout.EAST);
 
     //OPERATIONS PANEL
@@ -111,7 +106,7 @@ public class ImageViewGUI extends JFrame implements ImageView, ActionListener {
         break;
 
       case "Load":
-        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        JFileChooser jfc = new JFileChooser(".");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "PNG,JPEG,BMP,PPM", "jpg", "png", "jpeg", "bmp", "ppm");
         jfc.setFileFilter(filter);
@@ -146,6 +141,20 @@ public class ImageViewGUI extends JFrame implements ImageView, ActionListener {
         }
         break;
 
+      case "Script":
+        try {
+          final JFileChooser fchooser = new JFileChooser(".");
+          int retvalue = fchooser.showOpenDialog(this);
+          if (retvalue == JFileChooser.APPROVE_OPTION) {
+            File f = fchooser.getSelectedFile();
+            controller.processInput("-file " + f.getAbsolutePath());
+          }
+        } catch (Exception e) {
+          controller.renderViewMessage("Error loading script!");
+        }
+
+        break;
+
       case "Histogram":
         if (cache.getActiveImage() != null) {
           createHistogram();
@@ -174,23 +183,69 @@ public class ImageViewGUI extends JFrame implements ImageView, ActionListener {
       case "Blur":
         controller.processInput("blur " + cache.getActiveImage() + " " + cache.getActiveImage());
         break;
+
       case "Sharpen":
         controller.processInput("sharpen " + cache.getActiveImage() + " " + cache.getActiveImage());
+        break;
+
+      case "Brighten", "Darken":
+        String name = JOptionPane.showInputDialog( "Enter increment:" );
+        try {
+          int increment = Integer.parseInt(name);
+          String command = arg0.getActionCommand().toLowerCase();
+          controller.processInput(command + " " + increment + " "
+                  + cache.getActiveImage() + " " + cache.getActiveImage());
+        } catch (Exception e) {
+          this.controller.renderViewMessage("Invalid increment!");
+        }
+        break;
+
+      case "Sepia", "Greyscale":
+        controller.processInput(arg0.getActionCommand().toLowerCase() + " "
+                + cache.getActiveImage() + " " + cache.getActiveImage());
         break;
     }
     refresh();
   }
 
   private void createHistogram() {
+    //setting up new window for histogram view
     JFrame histogramFrame = new JFrame("Histogram View");
     histogramFrame.setPreferredSize(new Dimension(1024, 768));
     histogramFrame.setLayout(new BorderLayout());
 
-    JPanel histogramPanel = new HistogramPanel(cache);
-    JScrollPane scrollPanel = new JScrollPane(histogramPanel);
+    //creating and adding histograms to container panel
+    JPanel container = new JPanel();
+    container.setLayout(new GridLayout(4, 1));
+
+    JPanel redHistogram = new HistogramPanel(cache, 0);
+    redHistogram.setBorder(BorderFactory.createTitledBorder("Red"));
+
+    JPanel greenHistogram = new HistogramPanel(cache, 1);
+    greenHistogram.setBorder(BorderFactory.createTitledBorder("Green"));
+
+    JPanel blueHistogram = new HistogramPanel(cache, 2);
+    blueHistogram.setBorder(BorderFactory.createTitledBorder("Blue"));
+
+    JPanel intensityHistogram = new HistogramPanel(cache, 3);
+    intensityHistogram.setBorder(BorderFactory.createTitledBorder("Intensity"));
+
+    container.add(redHistogram);
+    container.add(greenHistogram);
+    container.add(blueHistogram);
+    container.add(intensityHistogram);
+
+    //SCROLL PANEL FOR HISTOGRAMS
+    JScrollPane scrollPanel = new JScrollPane(container);
     scrollPanel.setPreferredSize(new Dimension(1024, 768));
 
+    //CLOSE BUTTON
+    JButton closeButton = new JButton("Close Histogram View");
+    closeButton.addActionListener(arg0 -> histogramFrame.dispose());
+
+    //adding histogram elements to frame
     histogramFrame.add(scrollPanel, BorderLayout.CENTER);
+    histogramFrame.add(closeButton, BorderLayout.PAGE_END);
     histogramFrame.pack();
     histogramFrame.setVisible(true);
   }
