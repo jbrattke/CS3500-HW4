@@ -51,6 +51,24 @@ public class ImageUtilTest {
   }
 
   @Test
+  public void testConvertImageToFile2() {
+    ImageModel image = new ImageModelRGB(ImageUtil.readPPM("res/capybara.ppm"));
+    ImageUtil.convertImageToFile(image, "test.png");
+    File file = new File("test.png");
+    assertEquals(file.exists(), true);
+    file.delete();
+  }
+
+  @Test
+  public void testConvertImageToFile3() {
+    ImageModel image = new ImageModelRGB(ImageUtil.readPPM("res/capybara.ppm"));
+    ImageUtil.convertImageToFile(image, "test.bmp");
+    File file = new File("test.bmp");
+    assertEquals(file.exists(), true);
+    file.delete();
+  }
+
+  @Test
   public void testConvertFileToImage() {
     ImageModel image = ImageUtil.convertFileToImage("res/capybara.png");
     assertEquals(image.getWidth(), 550);
@@ -69,5 +87,40 @@ public class ImageUtilTest {
         assertEquals(image.getPixel(i, j).getBlue(), image2.getPixel(i, j).getBlue());
       }
     }
+  }
+
+  @Test
+  public void testFindScript() {
+    String script = ImageUtil.findScript("res/script.txt");
+    assertEquals(script, "load res/capybara.ppm capy\n" +
+            "red-component capy red\n" +
+            "green-component capy green\n" +
+            "blue-component capy blue\n" +
+            "luma-component capy luma\n" +
+            "intensity-component capy intensity\n" +
+            "value-component capy value\n" +
+            "horizontal-flip capy horizontal\n" +
+            "vertical-flip capy vertical\n" +
+            "brighten 50 capy bright\n" +
+            "darken 50 capy dark\n" +
+            "sepia capy sepia\n" +
+            "greyscale capy greyscale\n" +
+            "blur capy blur\n" +
+            "sharpen capy sharpen\n" +
+            "save res/red.png red\n" +
+            "save res/green.png green\n" +
+            "save res/blue.png blue\n" +
+            "save res/luma.png luma\n" +
+            "save res/intensity.png intensity\n" +
+            "save res/value.png value\n" +
+            "save res/horizontal.png horizontal\n" +
+            "save res/vertical.png vertical\n" +
+            "save res/bright.png bright\n" +
+            "save res/dark.png dark\n" +
+            "save res/sepia.png sepia\n" +
+            "save res/greyscale.png greyscale\n" +
+            "save res/blur.png blur\n" +
+            "save res/sharpen.png sharpen\n" +
+            "q\n");
   }
 }

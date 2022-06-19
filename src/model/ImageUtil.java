@@ -6,14 +6,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.StringReader;
 import java.util.Scanner;
 
 import javax.imageio.ImageIO;
-
-import controller.ImageControllerImpl;
-import view.ImageView;
-import view.ImageViewImpl;
 
 /**
  * This class contains utility methods to read and write images.
@@ -196,10 +191,11 @@ public class ImageUtil {
   }
 
   /**
-   * This method is used to run a script, the script must follow the controller format.
+   * This method is used to find a script from file path.
+   *
    * @param filename path of script
    */
-  public static void runScript(String filename) {
+  public static String findScript(String filename) {
     Scanner sc;
 
     try {
@@ -217,13 +213,7 @@ public class ImageUtil {
       }
     }
 
-    //RUNNING SCRIPT
-    StringBuilder log = new StringBuilder();
-    ImageView view = new ImageViewImpl(log);
-    StringReader in = new StringReader(script);
-    ImageCache cache = new ImageCacheModel();
-    ImageControllerImpl controller = new ImageControllerImpl(cache, view, in);
-    controller.run();
+    return script;
   }
 }
 

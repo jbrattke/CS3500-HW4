@@ -35,4 +35,23 @@ public interface ImageCache {
    * @return The size of the cache(number of images).
    */
   int getSize();
+
+  /**
+   * This method returns all Image names in the cache.
+   *
+   * @return String array of all Image names.
+   */
+  String[] getImageNames();
+
+  /**
+   * This method returns 'active' image name in the cache, used for GUI.
+   * @return active image name
+   */
+  String getActiveImage();
+
+  /**
+   * This method sets 'active' image name in the cache, used for GUI.
+   * @param name active image name
+   */
+  void setActiveImage(String name);
 }

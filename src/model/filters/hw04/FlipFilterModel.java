@@ -10,6 +10,8 @@ import model.filters.Filter;
  * pixel value manipulating filters and give them their similar apply method.
  */
 public abstract class FlipFilterModel implements Filter {
+  protected int axis; // 0 for x, 1 for y
+
   /**
    * Applies the filter to the given image.
    *
@@ -18,7 +20,6 @@ public abstract class FlipFilterModel implements Filter {
    */
   @Override
   public ImageModel apply(ImageModel image) {
-    Pixel[][] srcPixels = image.getPixels();
     Pixel[][] newPixels = new Pixel[image.getWidth()][image.getHeight()];
     for (int i = 0; i < image.getWidth(); i++) {
       for (int j = 0; j < image.getHeight(); j++) {
@@ -36,5 +37,21 @@ public abstract class FlipFilterModel implements Filter {
    * @param y the y coord of pixel
    * @return The filtered pixel.
    */
-  protected abstract Pixel findOpposite(ImageModel image, int x, int y);
+  protected Pixel findOpposite(ImageModel image, int x, int y) {
+    int mid = axis == 0 ? image.getWidth() / 2 : image.getHeight() / 2;
+    int dif = axis == 0 ? x - mid : y - mid;
+    int newVal = mid;
+
+    if (dif < 0) {
+      newVal = mid + Math.abs(dif) - 1;
+    } else if (dif > 0) {
+      newVal = mid - dif;
+    }
+
+    if (axis == 0) {
+      return image.getPixels()[newVal][y];
+    } else {
+      return image.getPixels()[x][newVal];
+    }
+  }
 }

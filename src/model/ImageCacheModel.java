@@ -8,6 +8,7 @@ import java.util.Map;
  */
 public class ImageCacheModel implements ImageCache {
   private final Map<String, ImageModel> images = new HashMap<String, ImageModel>();
+  private String activeImage;
 
   /**
    * This method adds an image with given name to the store,
@@ -55,5 +56,37 @@ public class ImageCacheModel implements ImageCache {
   @Override
   public int getSize() {
     return images.size();
+  }
+
+  /**
+   * This method returns all Image names in the cache.
+   *
+   * @return String array of all Image names.
+   */
+  @Override
+  public String[] getImageNames() {
+    return images.keySet().toArray(new String[images.size()]);
+  }
+
+  /**
+   * This method returns 'active' image name in the cache, used for GUI.
+   *
+   * @return active image name
+   */
+  @Override
+  public String getActiveImage() {
+    return activeImage;
+  }
+
+  /**
+   * This method sets 'active' image name in the cache, used for GUI.
+   *
+   * @param name active image name
+   */
+  @Override
+  public void setActiveImage(String name) {
+    if (images.containsKey(name)) {
+      activeImage = name;
+    }
   }
 }

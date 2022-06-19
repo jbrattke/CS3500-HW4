@@ -1,4 +1,4 @@
-package filters;
+package filters.hw04;
 
 import model.ImageModelRGB;
 import model.filters.hw04.RGBFilter;

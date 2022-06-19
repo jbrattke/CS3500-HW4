@@ -14,8 +14,8 @@ public abstract class ColorTransformFilterModel implements Filter {
   /**
    * Color transform filter model constructor.
    *
-   * @param matrix The matrix to apply to each pixel.
-   * The kernel must be a square matrix with an odd number of rows and columns.
+   * @param matrix The matrix to apply to each pixel. The kernel must be a
+   *               square matrix with an odd number of rows and columns.
    */
   public ColorTransformFilterModel(double[][] matrix) {
     this.matrix = matrix;

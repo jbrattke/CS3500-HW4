@@ -1,44 +1,39 @@
-package model.filters;
+package filters;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import model.ImageModel;
-import model.ImageModelRGB;
 import model.Pixel;
 import model.PixelRGB;
+import model.filters.Filter;
+
+import static org.junit.Assert.assertArrayEquals;
 
 /**
- * Represents an abstract filter model which applies a kernel to each pixel in an image.
+ * This abstract class is used for testing all filters that extend KernelFilterModel.
  */
-public abstract class KernelFilterModel implements Filter {
-  private final double[][] kernel;
+public abstract class KernelFilterModelTest {
+  ImageModel image;
+  Filter filter;
+  double[][] kernel;
 
-  /**
-   * Kernel filter model constructor.
-   *
-   * @param kernel The kernel to apply to each pixel. The kernel must be a
-   *               square matrix with an odd number of rows and columns.
-   */
-  public KernelFilterModel(double[][] kernel) {
-    this.kernel = kernel;
-  }
+  @Before
+  public abstract void setUp();
 
-  /**
-   * Applies the filter to the given image.
-   *
-   * @param image The image to apply the filter to.
-   * @return The filtered image.
-   */
-  @Override
-  public ImageModel apply(ImageModel image) {
-    Pixel[][] newPixels = new Pixel[image.getWidth()][image.getHeight()];
+  @Test
+  public void filterApplyTest() {
+    ImageModel filteredImage = filter.apply(image);
+
     for (int i = 0; i < image.getWidth(); i++) {
       for (int j = 0; j < image.getHeight(); j++) {
-        newPixels[i][j] = applyKernel(image, i ,j);
+        assertArrayEquals(applyKernel(i,j).getAllChannels(),
+                filteredImage.getPixel(i,j).getAllChannels());
       }
     }
-    return new ImageModelRGB(newPixels);
   }
 
-  private Pixel applyKernel(ImageModel image, int x, int y) {
+  protected Pixel applyKernel(int x, int y) {
     Pixel pixel = image.getPixel(x, y);
     double red = 0;
     double green = 0;

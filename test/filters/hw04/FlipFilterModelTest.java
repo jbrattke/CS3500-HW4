@@ -1,4 +1,4 @@
-package filters;
+package filters.hw04;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,9 +9,9 @@ import model.filters.Filter;
 import static org.junit.Assert.assertArrayEquals;
 
 /**
- * This abstract class is used for testing all filters that extend FilterModel.
+ * This abstract class is used for testing all filters that extend FlipFilterModel.
  */
-public abstract class FilterModelTest {
+public abstract class FlipFilterModelTest {
   ImageModel image;
   Filter filter;
 
@@ -24,11 +24,11 @@ public abstract class FilterModelTest {
 
     for (int i = 0; i < image.getWidth(); i++) {
       for (int j = 0; j < image.getHeight(); j++) {
-        assertArrayEquals(applyFilter(image.getPixel(i,j).getAllChannels()),
+        assertArrayEquals(findOpposite(i,j),
                 filteredImage.getPixel(i,j).getAllChannels());
       }
     }
   }
 
-  protected abstract int[] applyFilter(int[] pixel);
+  protected abstract int[] findOpposite(int x, int y);
 }

@@ -1,15 +1,30 @@
 load res/capybara.ppm capy
+red-component capy red
+green-component capy green
+blue-component capy blue
+luma-component capy luma
+intensity-component capy intensity
+value-component capy value
+horizontal-flip capy horizontal
+vertical-flip capy vertical
+brighten 50 capy bright
+darken 50 capy dark
+sepia capy sepia
+greyscale capy greyscale
 blur capy blur
-blur blur blur
-blur blur blur
-blur blur blur
-blur blur blur
-blur blur blur
-blur blur blur
-blur blur blur
-blur blur blur
-blur blur blur
-blur blur blur
-blur blur blur
-save blur.png blur
+sharpen capy sharpen
+save res/red.png red
+save res/green.png green
+save res/blue.png blue
+save res/luma.png luma
+save res/intensity.png intensity
+save res/value.png value
+save res/horizontal.png horizontal
+save res/vertical.png vertical
+save res/bright.png bright
+save res/dark.png dark
+save res/sepia.png sepia
+save res/greyscale.png greyscale
+save res/blur.png blur
+save res/sharpen.png sharpen
 q
