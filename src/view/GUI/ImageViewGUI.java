@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
 import controller.ControllerFeatures;
@@ -58,12 +59,12 @@ public class ImageViewGUI extends JFrame implements ImageView, ActionListener {
 
     //LAYER PANEL
     JPanel layers = new LayerPanel(this.cache, this);
-    layerPanel = new JScrollPane(layers);
-    layerPanel.setBorder(BorderFactory.createTitledBorder("Image Layers"));
-    layerPanel.setPreferredSize(new Dimension(200, 768));
-    layerPanel.getVerticalScrollBar().setUnitIncrement(16);
-    layerPanel.getHorizontalScrollBar().setUnitIncrement(16);
-    this.add(layerPanel, BorderLayout.EAST);
+//    layerPanel = new JScrollPane(layers);
+//    layerPanel.setBorder(BorderFactory.createTitledBorder("Image Layers"));
+//    layerPanel.setPreferredSize(new Dimension(200, 768));
+//    layerPanel.getVerticalScrollBar().setUnitIncrement(16);
+//    layerPanel.getHorizontalScrollBar().setUnitIncrement(16);
+    this.add(layers, BorderLayout.EAST);
 
     //OPERATIONS PANEL
     JPanel commandsPanel = new JPanel();
@@ -111,6 +112,9 @@ public class ImageViewGUI extends JFrame implements ImageView, ActionListener {
 
       case "Load":
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "PNG,JPEG,BMP,PPM", "jpg", "png", "jpeg", "bmp", "ppm");
+        jfc.setFileFilter(filter);
 
         int returnValue = jfc.showOpenDialog(null);
 
@@ -123,6 +127,22 @@ public class ImageViewGUI extends JFrame implements ImageView, ActionListener {
           } catch (Exception e) {
             e.printStackTrace();
           }
+        }
+        break;
+
+      case "Save":
+        if (cache.getActiveImage() != null) {
+          final JFileChooser fchooser = new JFileChooser(".");
+          FileNameExtensionFilter filter2 = new FileNameExtensionFilter(
+                  "PNG,JPEG,BMP,PPM", "jpg", "png", "jpeg", "bmp", "ppm");
+          fchooser.setFileFilter(filter2);
+          int retvalue = fchooser.showSaveDialog(this);
+          if (retvalue == JFileChooser.APPROVE_OPTION) {
+            File f = fchooser.getSelectedFile();
+            controller.processInput("save " + f.getAbsolutePath() + " " + cache.getActiveImage());
+          }
+        } else {
+          this.controller.renderViewMessage("No image loaded!");
         }
         break;
 
@@ -149,6 +169,13 @@ public class ImageViewGUI extends JFrame implements ImageView, ActionListener {
           controller.processInput("vertical-flip " + cache.getActiveImage()
                   + " " + cache.getActiveImage());
         }
+        break;
+
+      case "Blur":
+        controller.processInput("blur " + cache.getActiveImage() + " " + cache.getActiveImage());
+        break;
+      case "Sharpen":
+        controller.processInput("sharpen " + cache.getActiveImage() + " " + cache.getActiveImage());
         break;
     }
     refresh();
