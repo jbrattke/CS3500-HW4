@@ -29,7 +29,8 @@ public class LayerPanel extends JPanel implements ActionListener {
     add(duplicate, BorderLayout.PAGE_END);
 
     layerPanel = new JPanel();
-    layerPanel.setLayout(new GridLayout(512, 1));
+    layerPanel.setLayout(new BoxLayout(layerPanel, BoxLayout.Y_AXIS));
+
     JScrollPane scrollPanel = new JScrollPane(layerPanel);
     scrollPanel.setPreferredSize(new Dimension(200, 700));
     scrollPanel.setBorder(BorderFactory.createTitledBorder("Image Layers"));
@@ -50,7 +51,8 @@ public class LayerPanel extends JPanel implements ActionListener {
         button.setActionCommand(layerName);
         button.addActionListener(this);
         layersMap.put(layerName, button);
-        layerPanel.add(layersMap.get(layerName));
+
+        layerPanel.add(button);
       }
 
       if (layerNames[i].equals(cache.getActiveImage())) {

@@ -64,7 +64,7 @@ public class ImageViewGUI extends JFrame implements ImageView, ActionListener {
     //OPERATIONS PANEL
     JPanel commandsPanel = new JPanel();
     commandsPanel.setBorder(BorderFactory.createTitledBorder("Commands"));
-    String[] commands = {"Save", "Load", "Script", "Histogram", "Sepia", "Greyscale", "Blur", "Sharpen",
+    String[] commands = {"Load", "Save", "Script", "Histogram", "Sepia", "Greyscale", "Blur", "Sharpen",
             "Flip", "Brighten", "Darken", "Quit"};
     commandsPanel.setLayout(new GridLayout(1, commands.length));
     for (int i = 0; i < commands.length; i++) {
